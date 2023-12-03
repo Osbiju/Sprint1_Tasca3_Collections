@@ -38,15 +38,18 @@ public class Main {
 
         months.add(7, month8); //afegeixo agost despres i estara al seu lloc
 
-        //probo afegir un mes repetit
+        System.out.println("El mesos amb Agost:\n" + months.toString());
+
+
+        //probo afegir un mes repetit convertin larraylist en hashset
         HashSet<Month> hashMonth = new HashSet<Month>(months);
 
-        System.out.println("Aquiiiii");
+        System.out.println("Aqui intento afegir un altre cop Setembre");
         hashMonth.add(month9);
 
 
 
-        System.out.println("Els mesos amb Agost:\n" + months.toString());
+        System.out.println("Els mesos de l'anys sense repetir setembre:\n" + months.toString());
 
         System.out.println("Els mesos remenats:\n" + hashMonth);
 
@@ -56,7 +59,7 @@ public class Main {
         }
 
         //recorro la llista amb iterador
-        System.out.println("hashSet months:");
+        System.out.println("hashSet mesos desordenats:");
         Iterator<Month> iterator = hashMonth.iterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());

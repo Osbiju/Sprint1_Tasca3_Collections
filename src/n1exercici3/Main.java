@@ -16,7 +16,7 @@ public class Main {
         //legeixo el fitxer i el guardo a llegir-IMPORTANT: SHAN DE BORRAR LES DOS LINEAS BUIDES DEL ARXHIU.TXT, SINO NO FUNCIONA
         BufferedReader llegir = null;
         try {
-            llegir = new BufferedReader(new FileReader("C:\\Users\\Admin\\Documents\\Ejercicios_Prueba_random\\Testing\\AmigosCode\\Sprint1\\src\\countries.txt"));
+            llegir = new BufferedReader(new FileReader("countries.txt"));//TODO posar la direccio correcta
 //            String linea = paisos.put(K,V); esto seria si quisiera añadir uno a uno, que no venga de un archivo
             String linea = "";
             while ((linea = llegir.readLine()) != null) {
@@ -72,7 +72,7 @@ public class Main {
 
         //guardar puntuacioi mostrar, nomes es guarda un nom, podria mirar com fer per a que es guardessin tots els que vagi fent
         try {
-            BufferedWriter escriureResultats = new BufferedWriter(new FileWriter("C:\\Users\\Admin\\Documents\\Ejercicios_Prueba_random\\Testing\\AmigosCode\\Sprint1\\src\\classificacio.txt"));
+            BufferedWriter escriureResultats = new BufferedWriter(new FileWriter("classificacio.txt"));//TODO posar la direccio correcta
             escriureResultats.write(nom + " " + puntuacio);
             escriureResultats.close();//si no es posa, es creara larchiu pero no es llegira
         } catch (IOException e) {
