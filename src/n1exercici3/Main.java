@@ -6,15 +6,40 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
+    //construimos un mapa con dos argumentos K y V (Key,Value) y lo guardamos en paisos
+    private static HashMap<String, String> paisos = new HashMap<String, String>();
+
+    private static Scanner entrada = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Scanner entrada = new Scanner(System.in);
+        entrada = new Scanner(System.in);
         String nom = "";
 
-        //construimos un mapa con dos argumentos K y V (Key,Value) y lo guardamos en paisos
-        HashMap<String, String> paisos = new HashMap<String, String>();
+        //legim els paisos del fitxer
+        paisos = llegirPaisos();
 
+        //juguem
+        System.out.println("Introdueix el teu nom:");
+        nom = entrada.nextLine();
+        System.out.println(nom + ",benvingut al joc de les capitals, tindras 10 intens, i si acertas tindras 1 punt ");
+
+        int puntuacio = 0;
+        for (int i = 0; i < 10; i++) {
+            puntuacio += preguntarUsuari();
+        }
+
+        guardarPuntuacio(nom,puntuacio);
+
+        // Mostrem la puntuació
+        System.out.println(nom + ", has aconseguit una puntuació de " + puntuacio);
+
+
+
+    }
+    private static HashMap<String, String> llegirPaisos(){
         //legeixo el fitxer i el guardo a llegir-IMPORTANT: SHAN DE BORRAR LES DOS LINEAS BUIDES DEL ARXHIU.TXT, SINO NO FUNCIONA
         BufferedReader llegir = null;
+
         try {
             llegir = new BufferedReader(new FileReader("countries.txt"));//TODO posar la direccio correcta
 //            String linea = paisos.put(K,V); esto seria si quisiera añadir uno a uno, que no venga de un archivo
@@ -27,8 +52,6 @@ public class Main {
                 if (!key.equalsIgnoreCase("") && !value.equalsIgnoreCase("")) {
                     paisos.put(key, value);
                 }
-
-
             }
         } catch (IOException e) {
             throw new RuntimeException("Archiu no trobat");
@@ -44,13 +67,11 @@ public class Main {
                 }
             }
         }
+        return paisos;
+    }
 
+    private static int preguntarUsuari(){
         int puntuacio = 0;
-
-        System.out.println("Introdueix el teu nom:");
-        nom = entrada.nextLine();
-        System.out.println(nom + ",benvingut al joc de les capitals, tindras 10 intens, i si acertas tindras 1 punt ");
-
         for (int i = 0; i < 10; i++){
             //seleccionar pais atleatori
             Object[] key = paisos.keySet().toArray(new String[0]);
@@ -69,7 +90,10 @@ public class Main {
             }
 
         }
+        return 0;
+    }
 
+    private static void guardarPuntuacio(String nom, int puntuacio){
         //guardar puntuacioi mostrar, nomes es guarda un nom, podria mirar com fer per a que es guardessin tots els que vagi fent
         try {
             BufferedWriter escriureResultats = new BufferedWriter(new FileWriter("classificacio.txt"));//TODO posar la direccio correcta
@@ -81,12 +105,5 @@ public class Main {
         } finally {
             System.out.println(nom + ", has conseguit una puntuacio de " + puntuacio);
         }
-
-
-
-
-
-
-
     }
 }
