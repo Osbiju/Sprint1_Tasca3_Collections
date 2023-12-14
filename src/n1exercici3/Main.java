@@ -14,6 +14,7 @@ public class Main {
     public static void main(String[] args) {
         entrada = new Scanner(System.in);
         String nom = "";
+        int puntuacio = 0;
 
         //legim els paisos del fitxer
         paisos = llegirPaisos();
@@ -23,38 +24,36 @@ public class Main {
         nom = entrada.nextLine();
         System.out.println(nom + ",benvingut al joc de les capitals, tindras 10 intens, i si acertas tindras 1 punt ");
 
-        int puntuacio = 0;
-        for (int i = 0; i < 10; i++) {
-            puntuacio += preguntarUsuari();
-        }
-
+        puntuacio = preguntarUsuari();
         guardarPuntuacio(nom,puntuacio);
 
-        // Mostrem la puntuació
-        System.out.println(nom + ", has aconseguit una puntuació de " + puntuacio);
-
-
+        // Mostrem la puntuació, ja la mostrem trucant a la funcio
+       // System.out.println(nom + ", has aconseguit una puntuació de " + puntuacio);
 
     }
     private static HashMap<String, String> llegirPaisos(){
         //legeixo el fitxer i el guardo a llegir-IMPORTANT: SHAN DE BORRAR LES DOS LINEAS BUIDES DEL ARXHIU.TXT, SINO NO FUNCIONA
         BufferedReader llegir = null;
+        String linea = "";
+        String[] parts;
+        String key = "";
+        String value = "";
 
         try {
             llegir = new BufferedReader(new FileReader("countries.txt"));//TODO posar la direccio correcta
 //            String linea = paisos.put(K,V); esto seria si quisiera añadir uno a uno, que no venga de un archivo
-            String linea = "";
+
             while ((linea = llegir.readLine()) != null) {
-                String[] parts = linea.split(" ");
-                String key = parts[0].trim();
-                String value = parts[1].trim();
+                parts = linea.split(" ");
+                key = parts[0].trim();
+                value = parts[1].trim();
                 //controlar que no sigui null o buid la KEY o value
                 if (!key.equalsIgnoreCase("") && !value.equalsIgnoreCase("")) {
                     paisos.put(key, value);
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException("Archiu no trobat");
+            throw new RuntimeException("Archiu no trobat");//asi ajudem a entendre el error
             //throw new RuntimeException(e);este seria el por defecto
 
         } finally {
@@ -72,14 +71,18 @@ public class Main {
 
     private static int preguntarUsuari(){
         int puntuacio = 0;
+        Object[] key;
+        String pais = "";
+        String capital = "";
+
         for (int i = 0; i < 10; i++){
             //seleccionar pais atleatori
-            Object[] key = paisos.keySet().toArray(new String[0]);
-            String pais = (String)key[new Random().nextInt(key.length)];
+            key = paisos.keySet().toArray(new String[0]);
+            pais = (String)key[new Random().nextInt(key.length)];
 
             //demanar capital
             System.out.println("Quina es la capital de " + pais + " ?");
-            String capital = entrada.nextLine();
+            capital = entrada.nextLine();
 
             //comprobar resposta
             if (capital.equalsIgnoreCase(paisos.get(pais))){
@@ -88,13 +91,13 @@ public class Main {
             }else {
                 System.out.println("Incorrecte! La capital de " + pais + " es " + paisos.get(pais));
             }
-
         }
-        return 0;
+        return puntuacio;
     }
 
     private static void guardarPuntuacio(String nom, int puntuacio){
         //guardar puntuacioi mostrar, nomes es guarda un nom, podria mirar com fer per a que es guardessin tots els que vagi fent
+
         try {
             BufferedWriter escriureResultats = new BufferedWriter(new FileWriter("classificacio.txt"));//TODO posar la direccio correcta
             escriureResultats.write(nom + " " + puntuacio);
@@ -103,7 +106,7 @@ public class Main {
             throw new RuntimeException("No existe el archivo classificacio. Lo has movido?");
             //throw new RuntimeException(e);este seria el por defecto
         } finally {
-            System.out.println(nom + ", has conseguit una puntuacio de " + puntuacio);
+            System.out.println("\n" + nom + " has acabat el joc, has conseguit una puntuacio de " + puntuacio);
         }
     }
 }
