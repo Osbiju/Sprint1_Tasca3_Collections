@@ -38,7 +38,7 @@ public class JocCapitals {
                 paisos.put(parts[0].trim(), parts[1].trim());
             }
         } catch (IOException e) {
-            throw new RuntimeException("Archiu no trobat");
+            System.out.println("Archiu no trobat");
         }
 
         return paisos;
@@ -67,7 +67,7 @@ public class JocCapitals {
         try (BufferedWriter escriureResultats = new BufferedWriter(new FileWriter("classificacio.txt", true))) {
             escriureResultats.write(nom + " " + puntuacio + "\n");
         } catch (IOException e) {
-            throw new RuntimeException("No existe el archivo classificacio. Lo has movido?");
+            System.out.println("No existe el archivo classificacio. Lo has movido?");
         }
     }
 }
